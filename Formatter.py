@@ -2,10 +2,12 @@ import numpy as np
 import pandas as pd
 
 # Initial information needed to get the file
-date = input("What date do you want? (format = YYYY/M/D) ")
+date = input("What date do you want? (format = YYYY/MM/DD) ")
 input_file = input("What is the filepath? ")
 
-input_df = pd.read_csv(input_file)
+print(input_file)
+
+input_df = pd.read_csv("C:/Users/praje/Downloads/VolunteerBagPacking (3) - VolunteerBagPacking (3) (1).csv")
 input_df = input_df[input_df["Date"] == date]
 
 # Empty output dataframe
@@ -19,7 +21,7 @@ for key in out_data.keys():
 for index, row in input_df.iterrows():
     out_data["Start Date"].append(date)
     out_data["End Date"].append(date)
-    out_data["Full Name"].append(row["First Name"] + " " + row["Last Name"])
+    out_data["Full Name"].append(row["Who"])
     out_data["First Name"].append(row["First Name"])
     out_data["Last Name"].append(row["Last Name"])
     out_data["Activity Name"].append("Food Sort")
@@ -40,8 +42,11 @@ for index, row in input_df.iterrows():
 
 
 output_df = pd.DataFrame(out_data, columns=columns)
+columns.remove("Hours")
 agg_dict = {"Hours": "sum"}
-agg_dict.update( { x:"first" for x in columns.remove("Hours") } )
+agg_dict.update( { x:"first" for x in columns } )
 
 output_df = output_df.groupby('Full Name').agg(agg_dict)
-output_df.to_csv(str(date) + " Food Sort ")
+
+date = date.replace("/", "-")
+output_df.to_csv(str(date) + " Food Sort.csv")
