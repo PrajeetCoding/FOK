@@ -7,7 +7,7 @@ input_file = input("What is the filepath? ")
 
 print(input_file)
 
-input_df = pd.read_csv("C:/Users/praje/Downloads/VolunteerBagPacking (3) - VolunteerBagPacking (3) (1).csv")
+input_df = pd.read_csv(input_file)
 input_df = input_df[input_df["Date"] == date]
 
 # Empty output dataframe
